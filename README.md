@@ -16,9 +16,9 @@ This plugin provides an [Afterpay](https://www.afterpay.com/en-AU/index) gateway
 ## Screenshots
 
 <p>
-<img src="./resources/images/settings.png" height="200" alt="Settings">
-<img src="./resources/images/transactions.png" height="200" alt="Transactions">
-<img src="./resources/images/transaction-details.png" height="200" alt="Transaction details">
+<img src="./resources/images/settings.png" height="150" alt="Settings">
+<img src="./resources/images/transactions.png" height="150" alt="Transactions">
+<img src="./resources/images/transaction-details.png" height="150" alt="Transaction details">
 </p>
 
 ## Requirements
