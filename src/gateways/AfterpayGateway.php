@@ -114,26 +114,6 @@ class AfterpayGateway extends BaseGateway
                 'surname' => $order->billingAddress->lastName,
                 'email' => $order->email,
             ],
-            'billing' => [
-                'name' => $order->billingAddress->fullName,
-                'line1' => $order->billingAddress->address1,
-                'line2' => $order->billingAddress->address2,
-                'suburb' => $order->billingAddress->city,
-                'state' => $order->billingAddress->stateValue,
-                'postcode' => $order->billingAddress->zipCode,
-                'countryCode' => $order->billingAddress->country->iso,
-                'phoneNumber' => $order->billingAddress->phone,
-            ],
-            'shipping' => [
-                'name' => $order->shippingAddress->fullName,
-                'line1' => $order->shippingAddress->address1,
-                'line2' => $order->shippingAddress->address2,
-                'suburb' => $order->shippingAddress->city,
-                'state' => $order->shippingAddress->stateValue,
-                'postcode' => $order->shippingAddress->zipCode,
-                'countryCode' => $order->shippingAddress->country->iso,
-                'phoneNumber' => $order->shippingAddress->phone,
-            ],
             'taxAmount' => [
                 'amount' => (float)$order->getAdjustmentsTotalByType('tax'),
                 'currency' => $order->paymentCurrency,
@@ -163,6 +143,32 @@ class AfterpayGateway extends BaseGateway
                 ];
             }, $order->lineItems),
         ];
+
+        if($order->billingAddress) {
+            $data['billing'] = [
+                'name' => $order->billingAddress->fullName,
+                'line1' => $order->billingAddress->address1,
+                'line2' => $order->billingAddress->address2,
+                'suburb' => $order->billingAddress->city,
+                'state' => $order->billingAddress->stateValue,
+                'postcode' => $order->billingAddress->zipCode,
+                'countryCode' => $order->billingAddress->country->iso,
+                'phoneNumber' => $order->billingAddress->phone,
+            ];
+        }
+
+        if($order->shippingAddress) {
+            $data['shipping'] = [
+                'name' => $order->shippingAddress->fullName,
+                'line1' => $order->shippingAddress->address1,
+                'line2' => $order->shippingAddress->address2,
+                'suburb' => $order->shippingAddress->city,
+                'state' => $order->shippingAddress->stateValue,
+                'postcode' => $order->shippingAddress->zipCode,
+                'countryCode' => $order->shippingAddress->country->iso,
+                'phoneNumber' => $order->shippingAddress->phone,
+            ];
+        }
 
         $endpoint = sprintf(
             '%s/orders',
