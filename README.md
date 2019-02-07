@@ -13,6 +13,12 @@ This plugin provides an [Afterpay](https://www.afterpay.com/en-AU/index) gateway
 * Excellent Afterpay API response debugging
 * Native Commerce 2 Integration (no OmniPay abstraction)
 
+## Screenshots
+
+<img src="./resouces/images/settings.png" height="200" alt="Settings">
+<img src="./resouces/images/transactions.png" height="200" alt="Transactions">
+<img src="./resouces/images/transaction-details" height="200" alt="Transaction details">
+
 ## Requirements
 
 This plugin requires Craft CMS 3.1 or later and Craft Commerce 2.0 or later.
