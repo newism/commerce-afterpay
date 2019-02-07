@@ -1,0 +1,39 @@
+{
+    "name": "newism/commerce-afterpay",
+    "description": "Afterpay gateway for Craft Commerce 2",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "craft-commerce",
+        "gateway",
+        "afterpay"
+    ],
+    "support": {
+        "docs": "https://github.com/newism/commerce-afterpay/blob/master/README.md",
+        "issues": "https://github.com/newism/commerce-afterpay/issues"
+    },
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Newism",
+            "homepage": "https://newism.com.au"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.1",
+        "craftcms/commerce": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "newism\\commerce\\afterpay\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Afterpay for Craft Commerce 2",
+        "handle": "newism-commerce-afterpay"
+    }
+}

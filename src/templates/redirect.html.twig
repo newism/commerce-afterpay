@@ -1,0 +1,15 @@
+<html>
+<head>
+    <script src="https://portal.sandbox.afterpay.com/afterpay.js" async></script>
+</head>
+<body>
+Redirecting…
+{{ data|json_encode }}
+<script>
+  window.onload = function() {
+    AfterPay.initialize({countryCode: "AU"});
+    AfterPay.redirect({token: "{{ data.token }}"});
+  };
+</script>
+</body>
+</html>
