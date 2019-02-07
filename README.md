@@ -27,7 +27,7 @@ This plugin requires Craft CMS 3.1 or later and Craft Commerce 2.0 or later.
 
 ### Plugin Store
 
-To install Feed Me, navigate to the Plugin Store section of your Craft control panel, 
+To install `Afterpay for Craft Commerce 2`, navigate to the Plugin Store section of your Craft control panel, 
 search for `Afterpay for Craft Commerce 2`, and click the Try button.
 
 ### Composer
