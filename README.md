@@ -1,8 +1,8 @@
 <p align="center"><img src="./src/icon.svg" width="100" height="100" alt="Afterpay for Craft Commerce icon"></p>
 
-<h1 align="center">Afterpay Gateway plugin for Craft CMS 3.x and Craft Commerce 2.x</h1>
+<h1 align="center">Afterpay plugin for Craft Commerce</h1>
 
-This plugin provides an [Afterpay](https://www.afterpay.com/en-AU/index) payment provider for integration for [Craft Commerce v2.x](https://craftcms.com/commerce).
+This plugin provides an [Afterpay](https://www.afterpay.com/en-AU/index) gateway for [Craft Commerce v2.x](https://craftcms.com/commerce).
 
 ## Features
 
@@ -15,7 +15,7 @@ This plugin provides an [Afterpay](https://www.afterpay.com/en-AU/index) payment
 
 ## Requirements
 
-This plugin requires Craft CMS 3.1. or later and Craft Commerce 2.0 or later.
+This plugin requires Craft CMS 3.1 or later and Craft Commerce 2.0 or later.
 
 ## Installation
 
