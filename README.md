@@ -59,6 +59,16 @@ You may then decide to configure your Afterpay gateway using a [config file](htt
         ],
     ]; 
 
+### Currency Support
+
+Afterpay only supports one currency per region. Due to this limitation stores must set their base currency to match their Afterpay account region. Payments will be processed in the base currency.
+
+| Region | Currency | Docs                                                         |
+| ------ | -------- | ------------------------------------------------------------ |
+| AU     | AUD      | https://docs.afterpay.com/au-online-api-v1.html#money-object |
+| NZ     | NZD      | https://docs.afterpay.com/nz-online-api-v1.html#money-object |
+| US     | USD      | https://docs.afterpay.com/us-online-api-v1.html#money-object |
+
 ## Support
 
 ### GitHub
