@@ -83,4 +83,8 @@ You can try this plugin in a development environment for as long as you like.
 
 For more information, see [Craft's Commercial Plugin Licensing](https://docs.craftcms.com/v3/plugins.html#commercial-plugin-licensing).
 
+----
+
+<img src="./src/newism-logo.svg" width="100" height="100" alt="Afterpay for Craft Commerce icon">
+
 Brought to you by [Newism](https://newism.com.au)
