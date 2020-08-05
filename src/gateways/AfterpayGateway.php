@@ -146,7 +146,7 @@ class AfterpayGateway extends BaseGateway
 
         if($order->billingAddress) {
             $data['billing'] = [
-                'name' => $order->billingAddress->fullName,
+                'name' => $order->billingAddress->firstName . ' ' . $order->billingAddress->lastName,
                 'line1' => $order->billingAddress->address1,
                 'line2' => $order->billingAddress->address2,
                 'suburb' => $order->billingAddress->city,
@@ -159,7 +159,7 @@ class AfterpayGateway extends BaseGateway
 
         if($order->shippingAddress) {
             $data['shipping'] = [
-                'name' => $order->shippingAddress->fullName,
+                'name' => $order->shippingAddress->firstName . ' ' . $order->shippingAddress->lastName,
                 'line1' => $order->shippingAddress->address1,
                 'line2' => $order->shippingAddress->address2,
                 'suburb' => $order->shippingAddress->city,
