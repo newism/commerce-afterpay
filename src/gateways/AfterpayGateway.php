@@ -354,20 +354,22 @@ class AfterpayGateway extends BaseGateway
         );
     }
 
-    private function getUserAgent() {
+    private function getUserAgent()
+    {
         /** @var Plugin $plugin */
         $plugin = Craft::$app->plugins->getPlugin('newism-commerce-afterpay');
         /** @var Plugin $commercePlugin */
         $commercePlugin = Craft::$app->plugins->getPlugin('commerce');
         return sprintf(
-            '%s/%s/%s (Craft/%s; CraftCommerce/%s; PHP/%s; MerchantId/%s)',
+            '%s/%s/%s (Craft/%s; CraftCommerce/%s; PHP/%s; MerchantId/%s) %s',
             $plugin->getHandle(),
             $plugin->getVersion(),
             self::displayName(),
             Craft::$app->getVersion(),
             $commercePlugin->getVersion(),
             PHP_VERSION,
-            $this->merchantId
+            $this->merchantId,
+            UrlHelper::siteHost()
         );
     }
 }
