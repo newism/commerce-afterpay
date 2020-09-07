@@ -1,4 +1,4 @@
-{% from "_includes/forms" import textField, lightswitchField, selectField %}
+{% from "_includes/forms" import textField, lightswitchField, selectField, autosuggestField %}
 
 {{ selectField({
      label: "Region"|t('commerce'),
@@ -10,20 +10,22 @@
      errors: gateway.getErrors('region')
 }) }}
 
-{{ textField({
+{{ autosuggestField({
      label: "Merchant Id"|t('commerce'),
      id: 'merchantId',
      class: 'ltr',
      name: 'merchantId',
+     suggestEnvVars: true,
      value: gateway.merchantId,
      errors: gateway.getErrors('merchantId')
  }) }}
 
-{{ textField({
+{{ autosuggestField({
      label: "Merchant Key"|t('commerce'),
      id: 'merchantKey',
      class: 'ltr',
      name: 'merchantKey',
+     suggestEnvVars: true,
      value: gateway.merchantKey,
      errors: gateway.getErrors('merchantKey')
  }) }}

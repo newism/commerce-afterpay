@@ -150,7 +150,7 @@ class AfterpayGateway extends BaseGateway
                 'line1' => $order->billingAddress->address1,
                 'line2' => $order->billingAddress->address2,
                 'suburb' => $order->billingAddress->city,
-                'state' => $order->billingAddress->stateValue,
+                'state' => $order->billingAddress->stateText,
                 'postcode' => $order->billingAddress->zipCode,
                 'countryCode' => $order->billingAddress->country->iso,
                 'phoneNumber' => $order->billingAddress->phone,
@@ -163,7 +163,7 @@ class AfterpayGateway extends BaseGateway
                 'line1' => $order->shippingAddress->address1,
                 'line2' => $order->shippingAddress->address2,
                 'suburb' => $order->shippingAddress->city,
-                'state' => $order->shippingAddress->stateValue,
+                'state' => $order->shippingAddress->stateText,
                 'postcode' => $order->shippingAddress->zipCode,
                 'countryCode' => $order->shippingAddress->country->iso,
                 'phoneNumber' => $order->shippingAddress->phone,
@@ -182,8 +182,8 @@ class AfterpayGateway extends BaseGateway
             $endpoint,
             [
                 'auth' => [
-                    $this->merchantId,
-                    $this->merchantKey,
+                    Craft::parseEnv($this->merchantId),
+                    Craft::parseEnv($this->merchantKey),
                 ],
                 'headers' => [
                     'User-Agent' => $this->getUserAgent(),
@@ -192,7 +192,7 @@ class AfterpayGateway extends BaseGateway
             ]
         );
 
-        return new PurchaseResponse($tokenResponse);
+        return new PurchaseResponse($tokenResponse,$this->sandboxMode);
     }
 
     public function supportsCompletePurchase(): bool
@@ -202,16 +202,21 @@ class AfterpayGateway extends BaseGateway
 
     public function completePurchase(Transaction $transaction): RequestResponseInterface
     {
+        if (!$this->supportsCompletePurchase()) {
+            throw new NotSupportedException(Craft::t('commerce', 'Completing purchase is not supported by this gateway'));
+        }
+
         $orderTotal = (float)$transaction->getOrder()->totalPrice;
         $transactionTotal = (float)$transaction->paymentAmount;
-        
+
         if($orderTotal !== $transactionTotal) {
             return new AuthorizationAmountMismatchResponse();
         }
+        $order = $transaction->getOrder();
 
         $data = [
             'token' => Craft::$app->getRequest()->getQueryParam('orderToken'),
-            'merchantReference' => Craft::$app->getRequest()->getQueryParam('commerceTransactionHash'),
+            'merchantReference' => $order->getShortNumber(),
         ];
 
         $endpoint = sprintf(
@@ -221,20 +226,24 @@ class AfterpayGateway extends BaseGateway
 
         // Ping Afterpay
         $client = new Client();
-        $tokenResponse = $client->request(
-            'POST',
-            $endpoint,
-            [
-                'auth' => [
-                    $this->merchantId,
-                    $this->merchantKey,
-                ],
-                'headers' => [
-                    'User-Agent' => $this->getUserAgent(),
-                ],
-                'json' => $data,
-            ]
-        );
+        try{
+            $tokenResponse = $client->request(
+                'POST',
+                $endpoint,
+                [
+                    'auth' => [
+                        Craft::parseEnv($this->merchantId),
+                        Craft::parseEnv($this->merchantKey),
+                    ],
+                    'headers' => [
+                        'User-Agent' => $this->getUserAgent(),
+                    ],
+                    'json' => $data,
+                ]
+            );
+        } catch (BadResponseException $exception) {
+            return new GatewayErrorResponse($exception);
+        }
         return new CompletePurchaseResponse($tokenResponse);
     }
 
@@ -256,7 +265,6 @@ class AfterpayGateway extends BaseGateway
     public function completeAuthorize(Transaction $transaction): RequestResponseInterface
     {
         throw new NotSupportedException(Craft::t('commerce', 'Complete Authorize is not supported by this gateway'));
-
     }
 
     public function supportsCapture(): bool
@@ -318,8 +326,8 @@ class AfterpayGateway extends BaseGateway
                 $endpoint,
                 [
                     'auth' => [
-                        $this->merchantId,
-                        $this->merchantKey,
+                        Craft::parseEnv($this->merchantId),
+                        Craft::parseEnv($this->merchantKey),
                     ],
                     'headers' => [
                         'User-Agent' => $this->getUserAgent(),
@@ -354,22 +362,21 @@ class AfterpayGateway extends BaseGateway
         );
     }
 
-    private function getUserAgent()
-    {
+    private function getUserAgent() {
         /** @var Plugin $plugin */
         $plugin = Craft::$app->plugins->getPlugin('newism-commerce-afterpay');
         /** @var Plugin $commercePlugin */
         $commercePlugin = Craft::$app->plugins->getPlugin('commerce');
         return sprintf(
-            '%s/%s/%s (Craft/%s; CraftCommerce/%s; PHP/%s; MerchantId/%s) %s',
+            '%s/%s/%s (Craft/%s; CraftCommerce/%s; PHP/%s; MerchantId/%s)%s',
             $plugin->getHandle(),
             $plugin->getVersion(),
             self::displayName(),
             Craft::$app->getVersion(),
             $commercePlugin->getVersion(),
             PHP_VERSION,
-            $this->merchantId,
-            UrlHelper::siteHost()
+            Craft::parseEnv($this->merchantId),
+            'https://'.$_SERVER['SERVER_NAME'].'/about'
         );
     }
 }

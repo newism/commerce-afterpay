@@ -2,7 +2,7 @@
 
 <h1 align="center">Afterpay plugin for Craft Commerce</h1>
 
-This plugin provides an [Afterpay](https://www.afterpay.com/en-AU/index) gateway for [Craft Commerce v2.x](https://craftcms.com/commerce).
+This plugin provides an [Afterpay](https://www.afterpay.com/en-AU/index) gateway for [Craft Commerce](https://craftcms.com/commerce) (2 & 3).
 
 ## Features
 
@@ -23,7 +23,7 @@ This plugin provides an [Afterpay](https://www.afterpay.com/en-AU/index) gateway
 
 ## Requirements
 
-This plugin requires Craft CMS 3.1 or later and Craft Commerce 2.0 or later.
+This plugin requires Craft CMS 3.1 or later and Craft Commerce 2.x or Craft Commerce 3.x.
 
 ## Installation
 
@@ -31,8 +31,8 @@ This plugin requires Craft CMS 3.1 or later and Craft Commerce 2.0 or later.
 
 [Direct link to plugin store](https://plugins.craftcms.com/newism-commerce-afterpay)
 
-To install `Afterpay for Craft Commerce 2`, navigate to the Plugin Store section of your Craft control panel, 
-search for `Afterpay for Craft Commerce 2`, and click the Try button.
+To install `Afterpay for Craft Commerce`, navigate to the Plugin Store section of your Craft control panel, 
+search for `Afterpay for Craft Commerce`, and click the Try button.
 
 ### Composer
 
