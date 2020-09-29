@@ -7,6 +7,7 @@ use craft\base\Plugin;
 use craft\commerce\base\Gateway as BaseGateway;
 use craft\commerce\base\RequestResponseInterface;
 use craft\commerce\elements\Order;
+use craft\commerce\helpers\Currency;
 use craft\commerce\models\LineItem;
 use craft\commerce\models\OrderAdjustment;
 use craft\commerce\models\payments\BasePaymentForm;
@@ -115,7 +116,7 @@ class AfterpayGateway extends BaseGateway
                 'email' => $order->email,
             ],
             'taxAmount' => [
-                'amount' => (float)$order->getAdjustmentsTotalByType('tax'),
+                'amount' => (float)Currency::round($order->getAdjustmentsTotalByType('tax')),
                 'currency' => $order->currency,
             ],
             'shippingAmount' => [
