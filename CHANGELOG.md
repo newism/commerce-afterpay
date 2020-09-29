@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.1 - 2020-11-29
+### Fixed
+-  Use rounding helper to total tax adjustment. [#10](https://github.com/newism/commerce-afterpay/issues/10) [@dwhoban](https://github.com/dwhoban)
+
 ## 2.0.0 - 2020-11-09
 ### Added
 - CraftCommerce v3 support
