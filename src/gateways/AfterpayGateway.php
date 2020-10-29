@@ -52,6 +52,10 @@ class AfterpayGateway extends BaseGateway
             'production' => 'https://api.us.afterpay.com/v1',
             'sandbox' => 'https://api-sandbox.us.afterpay.com/v1',
         ],
+        'EU' => [
+            'production' => 'https://api.eu.afterpay.com/v1',
+            'sandbox' => 'https://api.eu-sandbox.afterpay.com/v1',
+        ],
     ];
 
     public $region = 'AU';
