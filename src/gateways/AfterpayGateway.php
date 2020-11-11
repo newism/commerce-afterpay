@@ -61,6 +61,7 @@ class AfterpayGateway extends BaseGateway
     public $region = 'AU';
     public $merchantId;
     public $merchantKey;
+    public $merchantReference;
     public $sandboxMode = false;
     public $userAgentUrl;
 
@@ -109,7 +110,7 @@ class AfterpayGateway extends BaseGateway
                 ]),
                 'redirectCancelUrl' => UrlHelper::siteUrl($order->cancelUrl),
             ],
-            'merchantReference' => $transaction->hash,
+            'merchantReference' => $this->getMerchantReference($order),
             'totalAmount' => [
                 'amount' => (float)$order->totalPrice,
                 'currency' => $order->currency,
@@ -222,7 +223,7 @@ class AfterpayGateway extends BaseGateway
 
         $data = [
             'token' => Craft::$app->getRequest()->getQueryParam('orderToken'),
-            'merchantReference' => $order->getShortNumber(),
+            'merchantReference' => $this->getMerchantReference($order),
         ];
 
         $endpoint = sprintf(
@@ -310,12 +311,14 @@ class AfterpayGateway extends BaseGateway
 
     public function refund(Transaction $transaction): RequestResponseInterface
     {
+        $order = $transaction->getOrder();
+        
         $data = [
             'amount' => [
                 'amount' => $transaction->amount,
                 'currency' => $transaction->currency
             ],
-            'merchantReference' => $transaction->hash,
+            'merchantReference' => $this->getMerchantReference($order),
         ];
 
         $endpoint = sprintf(
@@ -391,5 +394,16 @@ class AfterpayGateway extends BaseGateway
             Craft::parseEnv($this->merchantId),
             $url
         );
+    }
+
+    private function getMerchantReference($order)
+    {
+        $reference = Craft::$app->getView()->renderObjectTemplate($this->merchantReference, $order);
+
+        if (!$reference) {
+            return $order->getShortNumber();
+        }
+
+        return $reference;
     }
 }

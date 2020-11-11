@@ -39,11 +39,20 @@
      suggestEnvVars: true,
      value: gateway.userAgentUrl,
      errors: gateway.getErrors('userAgentUrl')
- }) }}
 
- {{ lightswitchField({
+{{ textField({
+     label: "Merchant Reference"|t('commerce'),
+     instructions: "The reference value sent to Afterpay. It is required this should match the order reference number you show customers after checkout is successful. For example `{number[:7]}` or `{id}`."|t('commerce'),
+     id: 'merchantReference',
+     class: 'ltr',
+     name: 'merchantReference',
+     value: gateway.merchantReference,
+     errors: gateway.getErrors('merchantReference')
+}) }}
+
+{{ lightswitchField({
      label: "Sandbox mode?"|t('commerce'),
      name: 'sandboxMode',
      on: gateway.sandboxMode,
      errors: gateway.getErrors('sandboxMode'),
- }) }}
+}) }}
