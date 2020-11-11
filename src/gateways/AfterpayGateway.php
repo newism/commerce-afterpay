@@ -310,6 +310,8 @@ class AfterpayGateway extends BaseGateway
 
     public function refund(Transaction $transaction): RequestResponseInterface
     {
+        $order = $transaction->getOrder();
+        
         $data = [
             'amount' => [
                 'amount' => $transaction->amount,
