@@ -30,6 +30,17 @@
      errors: gateway.getErrors('merchantKey')
  }) }}
 
+{{ autosuggestField({
+     label: "User Agent URL"|t('commerce'),
+     instructions: "The URL sent to Afterpay as part of the user agent header. This may need needed to correctly match against your site. Leave blank for the default of `/about`."|t('commerce'),
+     id: 'userAgentUrl',
+     class: 'ltr',
+     name: 'userAgentUrl',
+     suggestEnvVars: true,
+     value: gateway.userAgentUrl,
+     errors: gateway.getErrors('userAgentUrl')
+ }) }}
+
  {{ lightswitchField({
      label: "Sandbox mode?"|t('commerce'),
      name: 'sandboxMode',
