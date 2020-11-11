@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.2.0 - 2020-11-12
+### Added
+-  Add “User Agent URL” as gateway option, required for some site setups [#17](https://github.com/newism/commerce-afterpay/issues/17) [@engram-design](https://github.com/engram-design)
+-  Add “Merchant Reference” to define what the reference for the transaction is sent to Afterpay [#18](https://github.com/newism/commerce-afterpay/issues/18) [@engram-design](https://github.com/engram-design)
+### Changed
+-  Use `paymentCurrency` instead of `currency` [#14](https://github.com/newism/commerce-afterpay/issues/14) [@engram-design](https://github.com/engram-design)
+
 ## 2.1.0 - 2020-10-30
 ### Added
 -  Added UK Clearpay Support. [#15](https://github.com/newism/commerce-afterpay/issues/15) [@engram-design](https://github.com/engram-design)
