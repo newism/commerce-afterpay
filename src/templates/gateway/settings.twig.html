@@ -30,6 +30,16 @@
      errors: gateway.getErrors('merchantKey')
  }) }}
 
+{{ autosuggestField({
+     label: "User Agent URL"|t('commerce'),
+     instructions: "The URL sent to Afterpay as part of the user agent header. This may need needed to correctly match against your site. Leave blank for the default of `/about`."|t('commerce'),
+     id: 'userAgentUrl',
+     class: 'ltr',
+     name: 'userAgentUrl',
+     suggestEnvVars: true,
+     value: gateway.userAgentUrl,
+     errors: gateway.getErrors('userAgentUrl')
+
 {{ textField({
      label: "Merchant Reference"|t('commerce'),
      instructions: "The reference value sent to Afterpay. It is required this should match the order reference number you show customers after checkout is successful. For example `{number[:7]}` or `{id}`."|t('commerce'),
@@ -38,11 +48,11 @@
      name: 'merchantReference',
      value: gateway.merchantReference,
      errors: gateway.getErrors('merchantReference')
- }) }}
+}) }}
 
- {{ lightswitchField({
+{{ lightswitchField({
      label: "Sandbox mode?"|t('commerce'),
      name: 'sandboxMode',
      on: gateway.sandboxMode,
      errors: gateway.getErrors('sandboxMode'),
- }) }}
+}) }}

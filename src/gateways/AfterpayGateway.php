@@ -63,6 +63,7 @@ class AfterpayGateway extends BaseGateway
     public $merchantKey;
     public $merchantReference;
     public $sandboxMode = false;
+    public $userAgentUrl;
 
     public static function displayName(): string
     {
@@ -375,6 +376,13 @@ class AfterpayGateway extends BaseGateway
         $plugin = Craft::$app->plugins->getPlugin('newism-commerce-afterpay');
         /** @var Plugin $commercePlugin */
         $commercePlugin = Craft::$app->plugins->getPlugin('commerce');
+
+        $url = Craft::parseEnv($this->userAgentUrl);
+
+        if (!$url) {
+            $url = 'https://'.$_SERVER['SERVER_NAME'].'/about';
+        }
+
         return sprintf(
             '%s/%s/%s (Craft/%s; CraftCommerce/%s; PHP/%s; MerchantId/%s)%s',
             $plugin->getHandle(),
@@ -384,7 +392,7 @@ class AfterpayGateway extends BaseGateway
             $commercePlugin->getVersion(),
             PHP_VERSION,
             Craft::parseEnv($this->merchantId),
-            'https://'.$_SERVER['SERVER_NAME'].'/about'
+            $url
         );
     }
 
