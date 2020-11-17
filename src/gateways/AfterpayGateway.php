@@ -319,6 +319,7 @@ class AfterpayGateway extends BaseGateway
                 'currency' => $transaction->paymentCurrency
             ],
             'merchantReference' => $this->getMerchantReference($order),
+            'requestId' => $transaction->hash,
         ];
 
         $endpoint = sprintf(
