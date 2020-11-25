@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.2.1 - 2020-11-26
+### Fixed
+-  Fixed settings template
+
 ## 2.2.0 - 2020-11-12
 ### Added
 -  Add “User Agent URL” as gateway option, required for some site setups [#17](https://github.com/newism/commerce-afterpay/issues/17) [@engram-design](https://github.com/engram-design)
