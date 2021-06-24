@@ -151,7 +151,7 @@ class AfterpayGateway extends BaseGateway
             }, $order->lineItems),
         ];
 
-        if($order->billingAddress) {
+        if ($order->billingAddress) {
             $data['billing'] = [
                 'name' => $order->billingAddress->firstName . ' ' . $order->billingAddress->lastName,
                 'line1' => $order->billingAddress->address1,
@@ -164,7 +164,7 @@ class AfterpayGateway extends BaseGateway
             ];
         }
 
-        if($order->shippingAddress) {
+        if ($order->shippingAddress) {
             $data['shipping'] = [
                 'name' => $order->shippingAddress->firstName . ' ' . $order->shippingAddress->lastName,
                 'line1' => $order->shippingAddress->address1,
@@ -220,7 +220,7 @@ class AfterpayGateway extends BaseGateway
         $orderTotal = (float)$transaction->getOrder()->totalPrice;
         $transactionTotal = (float)$transaction->paymentAmount;
 
-        if($orderTotal !== $transactionTotal) {
+        if ($orderTotal !== $transactionTotal) {
             return new AuthorizationAmountMismatchResponse();
         }
         $order = $transaction->getOrder();
@@ -237,7 +237,7 @@ class AfterpayGateway extends BaseGateway
 
         // Ping Afterpay
         $client = new Client();
-        try{
+        try {
             $tokenResponse = $client->request(
                 'POST',
                 $endpoint,
@@ -316,7 +316,7 @@ class AfterpayGateway extends BaseGateway
     public function refund(Transaction $transaction): RequestResponseInterface
     {
         $order = $transaction->getOrder();
-        
+
         $data = [
             'amount' => [
                 'amount' => $transaction->amount,
