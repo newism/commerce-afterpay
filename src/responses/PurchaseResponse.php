@@ -11,13 +11,14 @@ class PurchaseResponse implements RequestResponseInterface
 {
     protected $response;
     protected $sandboxMode;
+    protected $region;
     protected $data = [];
 
-    public function __construct(Response $response, $sandboxMode = false)
+    public function __construct(Response $response, $region, $sandboxMode = false)
     {
         $this->response = $response;
-
         $this->sandboxMode = $sandboxMode;
+        $this->region = $region;
 
         $this->data = json_decode($response->getBody(), true);
     }
@@ -41,7 +42,11 @@ class PurchaseResponse implements RequestResponseInterface
     {
         $oldMode = Craft::$app->view->getTemplateMode();
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        $html = Craft::$app->view->renderTemplate('newism-commerce-afterpay/redirect.html.twig', ['data' => $this->data, 'sandboxMode' => $this->sandboxMode]);
+        $html = Craft::$app->view->renderTemplate('newism-commerce-afterpay/redirect.html.twig', [
+            'data' => $this->data,
+            'sandboxMode' => $this->sandboxMode,
+            'region' => $this->region
+        ]);
         Craft::$app->view->setTemplateMode($oldMode);
         ob_start();
         echo $html;

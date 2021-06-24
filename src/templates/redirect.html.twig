@@ -5,17 +5,15 @@
 	{% else %}
 		<script src="https://portal.afterpay.com/afterpay.js" async></script>
 	{% endif %}
-    
-	
 </head>
 <body>
 Redirecting…
 {{ data|json_encode }}
 <script>
-  window.onload = function() {
-    AfterPay.initialize({countryCode: "AU"});
-    AfterPay.redirect({token: "{{ data.token }}"});
-  };
+	window.onload = function() {
+		AfterPay.initialize({countryCode: {{ region }});
+		AfterPay.redirect({token: "{{ data.token }}"});
+	};
 </script>
 </body>
 </html>

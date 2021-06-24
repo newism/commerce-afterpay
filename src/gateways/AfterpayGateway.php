@@ -199,7 +199,11 @@ class AfterpayGateway extends BaseGateway
             ]
         );
 
-        return new PurchaseResponse($tokenResponse,$this->sandboxMode);
+        return new PurchaseResponse(
+            $tokenResponse,
+            $this->region,
+            $this->sandboxMode
+        );
     }
 
     public function supportsCompletePurchase(): bool
