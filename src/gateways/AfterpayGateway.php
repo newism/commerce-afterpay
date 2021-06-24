@@ -376,7 +376,8 @@ class AfterpayGateway extends BaseGateway
         );
     }
 
-    private function getUserAgent() {
+    private function getUserAgent()
+    {
         /** @var Plugin $plugin */
         $plugin = Craft::$app->plugins->getPlugin('newism-commerce-afterpay');
         /** @var Plugin $commercePlugin */
@@ -384,12 +385,8 @@ class AfterpayGateway extends BaseGateway
 
         $url = Craft::parseEnv($this->userAgentUrl);
 
-        if (!$url) {
-            $url = 'https://'.$_SERVER['SERVER_NAME'].'/about';
-        }
-
         return sprintf(
-            '%s/%s/%s (Craft/%s; CraftCommerce/%s; PHP/%s; MerchantId/%s)%s',
+            '%s/%s/%s (Craft/%s; CraftCommerce/%s; PHP/%s; MerchantId/%s) %s',
             $plugin->getHandle(),
             $plugin->getVersion(),
             self::displayName(),
@@ -397,7 +394,7 @@ class AfterpayGateway extends BaseGateway
             $commercePlugin->getVersion(),
             PHP_VERSION,
             Craft::parseEnv($this->merchantId),
-            $url
+            $url ? $url : UrlHelper::siteUrl()
         );
     }
 
