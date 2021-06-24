@@ -122,11 +122,11 @@ class AfterpayGateway extends BaseGateway
                 'email' => $order->email,
             ],
             'taxAmount' => [
-                'amount' => (float)Currency::round($order->getAdjustmentsTotalByType('tax')),
+                'amount' => (float)Currency::round($order->getTotalTax()),
                 'currency' => $order->paymentCurrency,
             ],
             'shippingAmount' => [
-                'amount' => (float)$order->getAdjustmentsTotalByType('shipping'),
+                'amount' => (float)Currency::round($order->getTotalShippingCost()),
                 'currency' => $order->paymentCurrency,
             ],
             'discounts' => array_map(function (OrderAdjustment $adjustment) use ($order) {
