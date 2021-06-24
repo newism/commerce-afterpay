@@ -5,6 +5,7 @@
      id: 'region',
      class: 'ltr',
      name: 'region',
+     required: true,
      options: {'AU': 'AU', 'NZ': 'NZ', 'US': 'US', 'EU': 'EU'},
      value: gateway.region,
      errors: gateway.getErrors('region')
@@ -15,6 +16,7 @@
      id: 'merchantId',
      class: 'ltr',
      name: 'merchantId',
+     required: true,
      suggestEnvVars: true,
      value: gateway.merchantId,
      errors: gateway.getErrors('merchantId')
@@ -25,6 +27,7 @@
      id: 'merchantKey',
      class: 'ltr',
      name: 'merchantKey',
+     required: true,
      suggestEnvVars: true,
      value: gateway.merchantKey,
      errors: gateway.getErrors('merchantKey')
@@ -32,7 +35,7 @@
 
 {{ autosuggestField({
      label: "User Agent URL"|t('commerce'),
-     instructions: "The URL sent to Afterpay as part of the user agent header. This may need needed to correctly match against your site. Leave blank for the default of `/about`."|t('commerce'),
+     instructions: "The URL sent to Afterpay as part of the user agent header. This may need needed to correctly match against your site."|t('commerce'),
      id: 'userAgentUrl',
      class: 'ltr',
      name: 'userAgentUrl',
