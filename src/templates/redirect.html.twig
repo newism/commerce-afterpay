@@ -11,7 +11,7 @@ Redirecting…
 {{ data|json_encode }}
 <script>
 	window.onload = function() {
-		AfterPay.initialize({countryCode: {{ region }});
+		AfterPay.initialize({countryCode: "{{ region }}"});
 		AfterPay.redirect({token: "{{ data.token }}"});
 	};
 </script>
