@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## 2.2.3 - 2021-09-13
+### Fixed
+- Fixes #27 JS Error on redirect 
+
 ## 2.2.2 - 2021-06-24
 ### Fixed
 - Fixes #23 - countryCode in redirect template is hardcoded
