@@ -2,7 +2,7 @@
     "name": "newism/commerce-afterpay",
     "description": "Afterpay gateway for Craft Commerce 2 & 3",
     "type": "craft-plugin",
-    "version": "2.2.2",
+    "version": "2.2.3",
     "keywords": [
         "craft",
         "cms",
