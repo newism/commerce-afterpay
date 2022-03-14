@@ -17,6 +17,7 @@ use craft\helpers\UrlHelper;
 use craft\web\Response as WebResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use newism\commerce\afterpay\events\SendRequestEvent;
 use newism\commerce\afterpay\models\forms\PaymentForm;
 use newism\commerce\afterpay\responses\AuthorizationAmountMismatchResponse;
 use newism\commerce\afterpay\responses\CompletePurchaseResponse;
@@ -57,6 +58,10 @@ class AfterpayGateway extends BaseGateway
             'sandbox' => 'https://api.eu-sandbox.afterpay.com/v1',
         ],
     ];
+
+    public const EVENT_BEFORE_SEND_PURCHASE_REQUEST = 'beforeSendPurchaseRequest';
+    public const EVENT_BEFORE_SEND_COMPLETE_PURCHASE_REQUEST = 'beforeSendCompletePurchaseRequest';
+    public const EVENT_BEFORE_SEND_REFUND_REQUEST = 'beforeSendRefundRequest';
 
     public $region = 'AU';
     public $merchantId;
@@ -182,12 +187,12 @@ class AfterpayGateway extends BaseGateway
             self::ENDPOINTS[$this->region][$this->sandboxMode ? 'sandbox' : 'production']
         );
 
-        // Ping Afterpay
-        $client = new Client();
-        $tokenResponse = $client->request(
-            'POST',
-            $endpoint,
-            [
+        $event = new SendRequestEvent([
+            'transaction' => $transaction,
+            'form' => $form,
+            'method' => 'POST',
+            'endpoint' => $endpoint,
+            'payload' => [
                 'auth' => [
                     Craft::parseEnv($this->merchantId),
                     Craft::parseEnv($this->merchantKey),
@@ -196,7 +201,18 @@ class AfterpayGateway extends BaseGateway
                     'User-Agent' => $this->getUserAgent(),
                 ],
                 'json' => $data,
-            ]
+            ],
+        ]);
+
+        // Raise 'beforeSendPurchaseRequest' event
+        $this->trigger(self::EVENT_BEFORE_SEND_PURCHASE_REQUEST, $event);
+
+        // Ping Afterpay
+        $client = new Client();
+        $tokenResponse = $client->request(
+            $event->method,
+            $event->endpoint,
+            $event->payload
         );
 
         return new PurchaseResponse(
@@ -235,22 +251,32 @@ class AfterpayGateway extends BaseGateway
             self::ENDPOINTS[$this->region][$this->sandboxMode ? 'sandbox' : 'production']
         );
 
+        $event = new SendRequestEvent([
+            'transaction' => $transaction,
+            'method' => 'POST',
+            'endpoint' => $endpoint,
+            'payload' => [
+                'auth' => [
+                    Craft::parseEnv($this->merchantId),
+                    Craft::parseEnv($this->merchantKey),
+                ],
+                'headers' => [
+                    'User-Agent' => $this->getUserAgent(),
+                ],
+                'json' => $data,
+            ],
+        ]);
+
+        // Raise 'beforeSendCompletePurchaseRequest' event
+        $this->trigger(self::EVENT_BEFORE_SEND_COMPLETE_PURCHASE_REQUEST, $event);
+
         // Ping Afterpay
         $client = new Client();
         try {
             $tokenResponse = $client->request(
-                'POST',
-                $endpoint,
-                [
-                    'auth' => [
-                        Craft::parseEnv($this->merchantId),
-                        Craft::parseEnv($this->merchantKey),
-                    ],
-                    'headers' => [
-                        'User-Agent' => $this->getUserAgent(),
-                    ],
-                    'json' => $data,
-                ]
+                $event->method,
+                $event->endpoint,
+                $event->payload
             );
         } catch (BadResponseException $exception) {
             return new GatewayErrorResponse($exception);
@@ -332,22 +358,32 @@ class AfterpayGateway extends BaseGateway
             $transaction->getParent()->reference
         );
 
+        $event = new SendRequestEvent([
+            'transaction' => $transaction,
+            'method' => 'POST',
+            'endpoint' => $endpoint,
+            'payload' => [
+                'auth' => [
+                    Craft::parseEnv($this->merchantId),
+                    Craft::parseEnv($this->merchantKey),
+                ],
+                'headers' => [
+                    'User-Agent' => $this->getUserAgent(),
+                ],
+                'json' => $data,
+            ],
+        ]);
+
+        // Raise 'beforeSendRefundRequest' event
+        $this->trigger(self::EVENT_BEFORE_SEND_REFUND_REQUEST, $event);
+
         // Ping Afterpay
         $client = new Client();
         try {
             $tokenResponse = $client->request(
-                'POST',
-                $endpoint,
-                [
-                    'auth' => [
-                        Craft::parseEnv($this->merchantId),
-                        Craft::parseEnv($this->merchantKey),
-                    ],
-                    'headers' => [
-                        'User-Agent' => $this->getUserAgent(),
-                    ],
-                    'json' => $data,
-                ]
+                $event->method,
+                $event->endpoint,
+                $event->payload
             );
         } catch (BadResponseException $exception) {
             return new GatewayErrorResponse($exception);
